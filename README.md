@@ -15,8 +15,8 @@ A bioinformatics library written in C
 	Example:
 	```
 	getHammingDistance(“AACCTT”,”GGCCTT”) //returns 2
-	getHammingDIstance(“TCGGA”,”AAAAG”) //returns 5
-	getHammingDistance(“A”,”AG”) //returns “Error! Strings are not equal!”
+	getHammingDistance(“TCGGA”,”AAAAG”) //returns 5
+	getHammingDistance(“A”,”AG”) //prints “Error! Strings are not equal!” and returns -1
 	```
  
 2. **int countSubstrPattern(string original, string pattern)**
@@ -34,11 +34,11 @@ A bioinformatics library written in C
   
 	Example:
 	```
-	isValidString(“AAGGCTATGC”,”ACGT”) //returns true
-	isValidString(“AAGGCTATGa”,”ACGT”) //returns false
-	isValidString(“ACGT”,”ACGT”) //returns true
-	isValidString(“ACGT101_”,”ACGT”) //returns false
-	isValidString(“091212345”,”0123456789”) //returns true
+	isValidString(“AAGGCTATGC”,”ACGT”) //returns true i.e. return 1
+	isValidString(“AAGGCTATGa”,”ACGT”) //returns false i.e. return 0
+	isValidString(“ACGT”,”ACGT”) //returns true i.e. return 1
+	isValidString(“ACGT101_”,”ACGT”) //returns false i.e. return 0
+	isValidString(“091212345”,”0123456789”) //returns true i.e. return 1
 	```
 
 4. **int getSkew(string str, int n)**
