@@ -10,7 +10,8 @@ A bioinformatics library written in C
 ###It has the following functions: 
 
 1. **int getHammingDistance(string str1, string str2)**
-	* <p>Given two strings str1 and str2 of same length (length must never be 0 or negative!), the Hamming Distance of those two strings are the number of inversions per character need to transform str1 to str2 or vise-versa. Simply put, the Hamming Distance of two strings is the number of characters that differ in ith position from position 1 to strlen(str1).</p>
+	* <p>Given two strings str1 and str2 of same length (length must never be 0 or negative!), the Hamming Distance of those two strings are the number of inversions per character need to transform str1 to str2 or vise-versa. </p>
+	* <p>Simply put, the Hamming Distance of two strings is the number of characters that differ in ith position from position 1 to strlen(str1).</p>
   
 	Example:
 	```
@@ -42,7 +43,8 @@ A bioinformatics library written in C
 	```
 
 4. **int getSkew(string str, int n)**
-	* <p>Given a genome str of some length q (where q>0), it returns the number of Gs minus the number of Cs in the first n nucleotides (q>=n). The value can be zero, negative or positive. The first position is one (1) not zero(0) as we typically associate with string implementations.</p>
+	* <p>Given a genome str of some length q (where q>0), it returns the number of Gs minus the number of Cs in the first n nucleotides (q>=n).</p>
+	* <p>The value can be zero, negative or positive. The first position is one (1) not zero(0) as we typically associate with string implementations.</p>
   
 	Example:
 	```
@@ -54,7 +56,8 @@ A bioinformatics library written in C
 	```
 
 5. **int getMaxSkewN(string str, int n)**
-	* <p>Given a genome str of some length q (where q>0), it returns the maximum value of the number of Gs minus the number of Cs in the first n nucleotides (q>=n). The value can be zero, negative or positive. The first position is one (1) not zero(0) as we typically associate with string implementations.</p>
+	* <p>Given a genome str of some length q (where q>0), it returns the maximum value of the number of Gs minus the number of Cs in the first n nucleotides (q>=n).</p>
+	* <p>The value can be zero, negative or positive. The first position is one (1) not zero(0) as we typically associate with string implementations.</p>
 
 	Example:
 	```
@@ -66,7 +69,8 @@ A bioinformatics library written in C
 	```
 
 6. **int getMinSkewN(string str, int n)**
-	* <p>Given a genome str of some length q (where q>0), it returns the minimum value of the number of Gs minus the number of Cs in the first n nucleotides (q>=n). The value can be zero, negative or positive. The first position is one (1) not zero(0) as we typically associate with string implementations.</p>
+	* <p>Given a genome str of some length q (where q>0), it returns the minimum value of the number of Gs minus the number of Cs in the first n nucleotides (q>=n). </p>
+	* <p>The value can be zero, negative or positive. The first position is one (1) not zero(0) as we typically associate with string implementations.</p>
 
 	Example:
 	```
