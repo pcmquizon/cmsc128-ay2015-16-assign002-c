@@ -88,6 +88,106 @@ int countSubstrPattern(char *original, char *pattern){
 
 }
 
+/**
+ * bool isValidString(string str, string alphabet)
+ * Given an alphabet string where all letters are assumed to be unique, 
+ * this function returns true if the string str is a valid string based on 
+ * the letters of alphabet
+ * 
+ * Example:
+ * isValidString(“AAGGCTATGC”,”ACGT”) //returns true
+ * isValidString(“AAGGCTATGa”,”ACGT”) //returns false
+ * isValidString(“ACGT”,”ACGT”) //returns true
+ * isValidString(“ACGT101_”,”ACGT”) //returns false
+ * isValidString(“091212345”,”0123456789”) //returns true
+**/
+int isValidString(char *str, char *alphabet){
+
+	int valid = 1;
+	int strLen = strlen(str);
+	int alphLen = strlen(alphabet);
+
+	int i,j;
+
+	char *ptr;
+
+	char haystack[strLen];
+	strcpy(haystack,str);
+	//printf("%s\n\n", haystack);
+	
+	for(i=0; i<alphLen; i++){
+		for(j=0; j<strLen; j++){
+			if( alphabet[i]==haystack[j] ){
+				haystack[j]=' ';
+			}
+		}
+		//printf("%s\n",haystack);
+	}
+
+	for(i=0; i<strLen; i++){
+		if( haystack[i]!=' ' ){
+			return 0;
+		}
+	}
+	
+	return valid;
+
+}
+
+
+/**
+ * int getSkew(string str, int n)
+ * Given a genome str of some length q (where q>0), it returns the number of Gs 
+ * minus the number of Cs in the first n nucleotides (q>=n). 
+ * The value can be zero, negative or positive. 
+ * The first position is one (1) not zero(0) as we typically associate with 
+ * string implementations.
+ * 
+ * Example:
+ * getSkew(“GGCCAC”, 1) //returns 1
+ * getSkew(“GGCCAC”, 2) //returns 2
+ * getSkew(“GGCCAC”, 3) //returns 1
+ * getSkew(“GGCCAC”, 4) //returns 0
+ * getSkew(“GGCCAC”, 5) //returns 0
+**/
+int getSkew(char *str, int n){
+
+	int skewCount = 0;	
+
+	int i;
+	char *ptr;
+
+	int gCount = 0; 
+	int cCount = 0;
+
+	char haystack[n];
+	strcpy(haystack,str);
+	//printf("%s\n", haystack);
+	
+	haystack[n] = '\0';
+	//printf("%s\n", haystack);
+	
+	
+/*
+	//initial implementation
+	for(i=0; i<n; i++){
+		if(haystack[i] == 'G'){
+			gCount++;
+		}
+		else if(haystack[i] == 'C'){
+			cCount++;
+		}
+	}
+*/
+
+	gCount = countSubstrPattern(haystack,"G");
+	cCount = countSubstrPattern(haystack,"C");
+
+	skewCount = gCount - cCount;
+	return skewCount;
+}
+
+
 int main(){
 	/* //test hamming distance
 	printf("%d\n",getHammingDistance("AACCTT","GGCCTT"));
@@ -95,11 +195,26 @@ int main(){
  	printf("%d\n",getHammingDistance("A","AG"));
  	//*/
  	
- 	//printf("%d\n",countSubstrPattern("AATATATAGG","ATA"));
- 	//* //test substr pattern
+ 	/* //test substr pattern
  	printf("%d\n",countSubstrPattern("AATATATAGG","GG"));
 	printf("%d\n",countSubstrPattern("AATATATAGG","ATA"));
  	printf("%d\n",countSubstrPattern("AATATATAGG","ACTGACTGACTG"));
+ 	//*/
+
+ 	/* //test valid string
+ 	printf("%d\n",isValidString("AAGGCTATGC","ACGT"));
+	printf("%d\n",isValidString("AAGGCTATGa","ACGT"));
+	printf("%d\n",isValidString("ACGT","ACGT"));
+	printf("%d\n",isValidString("ACGT101_","ACGT"));
+	printf("%d\n",isValidString("091212345","0123456789"));
+ 	//*/
+
+ 	//* //test skew
+ 	printf("%d\n",getSkew("GGCCAC", 1));
+ 	printf("%d\n",getSkew("GGCCAC", 2));
+ 	printf("%d\n",getSkew("GGCCAC", 3));
+ 	printf("%d\n",getSkew("GGCCAC", 4));
+ 	printf("%d\n",getSkew("GGCCAC", 5));
  	//*/
 	return 0;
 }
