@@ -2,32 +2,28 @@
 #include<stdlib.h>
 #include<string.h>
 
-/** 
- * int getHammingDistance(string str1, string str2)
- * Given two strings str1 and str2 of same length (length must never be 0 or 
- * negative!), the Hamming Distance of those two strings are the number of 
- * inversions per character need to transform str1 to str2 or vise-versa. 
- *  	
- * Simply put, the Hamming Distance of two strings is the number of characters 
- * that differ in ith position from position 1 to strlen(str1).
- *
- * Example:
- * getHammingDistance(“AACCTT”,”GGCCTT”) //returns 2
- * getHammingDistance(“TCGGA”,”AAAAG”) //returns 5
- * getHammingDistance(“A”,”AG”) //returns “Error! Strings are not equal!”
-**/
-
+ /**
+  * Computes the number of inversions per character needed to transform 
+  * str1 to str2 or vise-versa.
+  * 
+  * @param  str1 1st input string, must be of same length with str2
+  * @param  str2 2nd input string, must be of same length with str1
+  * @return -1 	any of the ff. occured:
+  *             	- one or both input string(s) is NULL
+  *             	- one or both input string(s) is empty
+  *             	- the strings' lengths do not match
+  * 			
+  * @return		number of characters that differ in ith position 
+  *                 from position 1 to strlen(str1)
+  */
 int getHammingDistance(char *str1, char *str2){
 
-	if( (strlen(str1) != strlen(str2)) || 
-		(strlen(str1)==0 || strlen(str2)==0) ){
-		//if user want to pipe results in file, only return values are written
-		//error messages are still printed to stderr and shown to user
-
-		//1> writes return values
-		//2> writes error messages
-		//http://www.tutorialspoint.com/cprogramming/c_error_handling.htm
-		//http://www.jstorimer.com/blogs/workingwithcode/7766119-when-to-use-stderr-instead-of-stdout
+	if( str1==NULL || str2==NULL ){
+		fprintf(stderr,"Error! One of the input string is NULL!\n");
+		return -1;
+	}
+	else if( (strlen(str1) != strlen(str2)) || 
+			 (strlen(str1)<=0 || strlen(str2)<=0) ){
 		fprintf(stderr,"Error! Strings are not equal!\n");
 		return -1;
 	}
@@ -35,8 +31,6 @@ int getHammingDistance(char *str1, char *str2){
 	int hammingDistance = 0;
 	int i;
 	for(i=0; i<strlen(str1); i++){
-		//printf("%c %c\n",str1[i],str2[i] );
-		//will try to implement something better
 		if( str1[i]!=str2[i] ) hammingDistance++;
 	}
 
@@ -44,43 +38,45 @@ int getHammingDistance(char *str1, char *str2){
 
 }
 
-/**
- * int countSubstrPattern(string original, string pattern)
- * Given a string original and pattern, we will count the number of occurrence 
- * of pattern in original
- *
- * Example:
- * countSubstrPattern(“AATATATAGG”,”GG”) //returns 1
- * countSubstrPattern(“AATATATAGG”,”ATA”) //returns 3
- * countSubstrPattern(“AATATATAGG”,”ACTGACTGACTG”) //returns 0
-**/
+
+ /**
+  * Counts the number of occurrence of given pattern in original string
+  * @param  original where string pattern will be searched
+  * @param  pattern  what to search in string original
+  * @return -1 	any of the ff. occured:
+  *             	- one or both input string(s) is NULL
+  *             	- one or both input string(s) is empty
+  * 			
+  * @return		number of occurrence of pattern in string
+  */
 int countSubstrPattern(char *original, char *pattern){
+
+	if( original==NULL || pattern==NULL ){
+		fprintf(stderr,"Error! One of the input string is NULL!\n");
+		return -1;
+	}
 
 	int subStrPattern = 0;
 	int origLen = strlen(original);
-
 	int i;
 
+	//pointer that will search the array haystack
 	char *ptr;
 
+	//copy of input string original
 	char haystack[origLen];
 	strcpy(haystack,original);
-	//printf("%s\n\n", haystack);
 	
 	//searches for all first occurrences of pattern in original
 	while( (ptr = strstr(haystack,pattern))!=NULL ){
 		//searches for right index pointed by ptr
 		for(i=0; i<origLen; i++){
 			if(&haystack[i]==ptr){
-				//printf("%s\n",ptr);
-				//printf("ptr at %d\n",i);
-				//should recheck for code loopholes soon
 				haystack[i] = ' ';	// replaces the first occurrence's letter
 									// in haystack with space to be able to
 									// reach end of string, i.e exhaust all 
 									// first occurrences [prevent duplicate match]
 				subStrPattern++;
-				//printf("%s\n\n",ptr);
 			}
 		}
 	}
@@ -89,254 +85,313 @@ int countSubstrPattern(char *original, char *pattern){
 
 }
 
-/**
- * bool isValidString(string str, string alphabet)
- * Given an alphabet string where all letters are assumed to be unique, 
- * this function returns true if the string str is a valid string based on 
- * the letters of alphabet
- * 
- * Example:
- * isValidString(“AAGGCTATGC”,”ACGT”) //returns true
- * isValidString(“AAGGCTATGa”,”ACGT”) //returns false
- * isValidString(“ACGT”,”ACGT”) //returns true
- * isValidString(“ACGT101_”,”ACGT”) //returns false
- * isValidString(“091212345”,”0123456789”) //returns true
-**/
+ /**
+  * Checks if a string str is valid if all of its characters belong to the
+  * given string alphabet
+  * @param  str      string to be validated
+  * @param  alphabet string defining the alphabet to be used in validation
+  * @return -1 	any of the ff. occured:
+  *             	- one or both input string(s) is NULL
+  *             	- one or both input string(s) is empty
+  * 			
+  * @return	1	if the string is valid
+  *  			
+  * @return	0	if the string is invalid
+  */
 int isValidString(char *str, char *alphabet){
 
-	int valid = 1;
+	if( str==NULL || alphabet==NULL ){
+		fprintf(stderr,"Error! One of the input string is NULL!\n");
+		return -1;
+	}
+
 	int strLen = strlen(str);
 	int alphLen = strlen(alphabet);
 
 	int i,j;
 
-	char *ptr;
-
+	//copy of input string original
 	char haystack[strLen];
 	strcpy(haystack,str);
-	//printf("%s\n\n", haystack);
-	
+		
 	for(i=0; i<alphLen; i++){
 		for(j=0; j<strLen; j++){
 			if( alphabet[i]==haystack[j] ){
-				haystack[j]=' ';
+				haystack[j]=' ';	// replaces matching members of haystack 
+									// with space
 			}
 		}
-		//printf("%s\n",haystack);
 	}
 
 	for(i=0; i<strLen; i++){
 		if( haystack[i]!=' ' ){
-			return 0;
+			return 0;	//return if character is not a space
 		}
 	}
 	
-	return valid;
+	return 1;
 
 }
 
 
-/**
- * int getSkew(string str, int n)
- * Given a genome str of some length q (where q>0), it returns the number of Gs 
- * minus the number of Cs in the first n nucleotides (q>=n). 
- * The value can be zero, negative or positive. 
- * The first position is one (1) not zero(0) as we typically associate with 
- * string implementations.
- * 
- * Example:
- * getSkew(“GGCCAC”, 1) //returns 1
- * getSkew(“GGCCAC”, 2) //returns 2
- * getSkew(“GGCCAC”, 3) //returns 1
- * getSkew(“GGCCAC”, 4) //returns 0
- * getSkew(“GGCCAC”, 5) //returns 0
-**/
+ /**
+  * Computes the number of Gs minus the number of Cs in the first n indices
+  * in the given string str
+  * @param  str input string of length q (where q>0)
+  * @param  n   number of places to check
+  * @return -1 	any of the ff. occured:
+  *             	- input string is NULL
+  *             	- input string is empty
+  *             	- input n is greater than length of input string
+  *             	- input n is less than 0
+  * 			
+  * @return		number of Gs minus number of Cs found in the first n indices
+  */
 int getSkew(char *str, int n){
 
-	int skewCount = 0;	
-
-	int i;
-	char *ptr;
+	if( str==NULL ){
+		fprintf(stderr,"Error! Input string is NULL!\n");
+		return -1;
+	}
+	else if( (strlen(str))<=0 ){
+		fprintf(stderr,"Error! Empty string!\n");
+		return -1;
+	}
+	else if( n<=0 ){
+		fprintf(stderr,"Error! Input n is negative!\n");
+		return -1;
+	}
+	else if( (strlen(str))<n ){
+		fprintf(stderr,"Error! String length is less than n!\n");
+		return -1;
+	}
 
 	int gCount = 0; 
 	int cCount = 0;
 
+	//copy of input string original
 	char haystack[n];
 	strcpy(haystack,str);
-	//printf("%s\n", haystack);
 	
+	//terminate string at index n
 	haystack[n] = '\0';
-	//printf("%s\n", haystack);
 	
-	
-/*
-	//initial implementation
-	for(i=0; i<n; i++){
-		if(haystack[i] == 'G'){
-			gCount++;
-		}
-		else if(haystack[i] == 'C'){
-			cCount++;
-		}
-	}
-*/
-
 	gCount = countSubstrPattern(haystack,"G");
 	cCount = countSubstrPattern(haystack,"C");
 
-	skewCount = gCount - cCount;
-	return skewCount;
+	return gCount - cCount;
 }
 
 
-/**
- * http://www.tutorialspoint.com/c_standard_library/c_function_qsort.htm
- * http://stackoverflow.com/questions/11524857/built-in-functions-for-sorting-arrays-in-c
- * should return 
- * 		negative if the first argument is less than the second, 
- * 		zero if they are equal, and 
- * 		positive if the first argument is greater than the second
-**/
+ /**
+  * http://www.tutorialspoint.com/c_standard_library/c_function_qsort.htm
+  * http://stackoverflow.com/questions/11524857/built-in-functions-for-sorting-arrays-in-c
+  * should return 
+  * 		negative if the first argument is less than the second, 
+  * 		zero if they are equal, and 
+  * 		positive if the first argument is greater than the second
+ **/
 int cmp(const void *a, const void *b){
 	return *(int*)a-*(int*)b;
 }
 
 
-/**
- * int getMaxSkewN(string str, int n)
- * Given a genome str of some length q (where q>0), it returns the maximum 
- * value of the number of Gs minus the number of Cs in the first n nucleotides 
- * (q>=n). The value can be zero, negative or positive. 
- * The first position is one (1) not zero(0) as we typically associate with 
- * string implementations.
- * Example:
- * getMaxSkewN(“GGCCAC”, 1) //returns 1
- * getMaxSkewN(“GGCCAC”, 2) //returns 2
- * getMaxSkewN(“GGCCAC”, 3) //returns 2
- * getMaxSkewN(“GGCCAC”, 4) //returns 2
- * getMaxSkewN(“GGCCAC”, 5) //returns 2
-**/
+ /**
+  * Takes the maximum skew (number of Gs minus number of Cs found) possible,
+  * given a string str and first n indices to check
+  * @param  str input string of length q (where q>0)
+  * @param  n   number of places to check
+  * @return -1 	any of the ff. occured:
+  *             	- input string is NULL
+  *             	- input string is empty
+  *             	- input n is greater than length of input string
+  *             	- input n is less than 0
+  * 			
+  * @return		maximum number of Gs minus number of Cs found after computing
+  *                  after computing all skews
+  */
 int getMaxSkew(char *str, int n){
 
-	int maxSkew = 0;	
-
-	int i;
-	char *ptr;
-
-	char haystack[n];
-	strcpy(haystack,str);
-	//printf("%s\n", haystack);
-	
-	haystack[n] = '\0';
-	//printf("%s\n", haystack);
-	
-	int ithSkew[n];
-	for(i=0; i<n; i++){
-		ithSkew[i] = getSkew(haystack, (i+1));
-		//printf("%d\n",ithSkew[i]);
+	if( str==NULL ){
+		fprintf(stderr,"Error! Input string is NULL!\n");
+		return -1;
+	}
+	else if( (strlen(str))<=0 ){
+		fprintf(stderr,"Error! Empty string!\n");
+		return -1;
+	}
+	else if( n<=0 ){
+		fprintf(stderr,"Error! Input n is negative!\n");
+		return -1;
+	}
+	else if( (strlen(str))<n ){
+		fprintf(stderr,"Error! String length is less than n!\n");
+		return -1;
 	}
 
+	int i;
+
+	//copy of input string original
+	char haystack[n];
+	strcpy(haystack,str);
+
+	//terminate string at index n
+	haystack[n] = '\0';
 	
+	//array to store skew at ith index
+	int ithSkew[n];
+
+	//get all possible skews
+	for(i=0; i<n; i++){
+		ithSkew[i] = getSkew(haystack, (i+1));
+	}
+
+	//sort array ithSkew in ascending order
 	qsort(ithSkew, n, sizeof(int), cmp);
-
-	//for(i=0; i<n; i++){printf("%d ",ithSkew[i]);}
-
-	//printf("\n");
 	
-	maxSkew = ithSkew[n-1];
-	return maxSkew;
+	return ithSkew[n-1];
 }
 
 /**
- * int getMinSkewN(string str, int n)
- * Given a genome str of some length q (where q>0), it returns the minimum 
- * value of the number of Gs minus the number of Cs in the first n nucleotides 
- * (q>=n). 
- * The value can be zero, negative or positive. 
- * The first position is one (1) not zero(0) as we typically associate with 
- * string implementations.
- * 
- * Example:
- * getMinSkewN(“GGCCAC”, 1) //returns 1
- * getMinSkewN(“GGCCAC”, 2) //returns 1
- * getMinSkewN(“GGCCAC”, 3) //returns 1
- * getMinSkewN(“GGCCAC”, 4) //returns 0
- * getMinSkewN(“GGCCAC”, 5) //returns 0
-**/
+  * Takes the minimun skew (number of Gs minus number of Cs found) possible,
+  * given a string str and first n indices to check
+  * @param  str input string of length q (where q>0)
+  * @param  n   number of places to check
+  * @return -1 	any of the ff. occured:
+  *             	- input string is NULL
+  *             	- input string is empty
+  *             	- input n is greater than length of input string
+  *             	- input n is less than 0
+  * 			
+  * @return		minimum number of Gs minus number of Cs found after computing
+  *                  after computing all skews
+  */
 int getMinSkew(char *str, int n){
 
-	int minSkew = 0;	
-
-	int i;
-	char *ptr;
-
-	char haystack[n];
-	strcpy(haystack,str);
-	//printf("%s\n", haystack);
-	
-	haystack[n] = '\0';
-	//printf("%s\n", haystack);
-	
-	int ithSkew[n];
-	for(i=0; i<n; i++){
-		ithSkew[i] = getSkew(haystack, (i+1));
-		//printf("%d\n",ithSkew[i]);
+	if( str==NULL ){
+		fprintf(stderr,"Error! Input string is NULL!\n");
+		return -1;
+	}
+	else if( (strlen(str))<=0 ){
+		fprintf(stderr,"Error! Empty string!\n");
+		return -1;
+	}
+	else if( n<=0 ){
+		fprintf(stderr,"Error! Input n is negative!\n");
+		return -1;
+	}
+	else if( (strlen(str))<n ){
+		fprintf(stderr,"Error! String length is less than n!\n");
+		return -1;
 	}
 
+	int i;
+
+	//copy of input string original
+	char haystack[n];
+	strcpy(haystack,str);
 	
+	//terminate string at index n
+	haystack[n] = '\0';
+	
+	//array to store skew at ith index
+	int ithSkew[n];
+
+	//get all possible skews
+	for(i=0; i<n; i++){
+		ithSkew[i] = getSkew(haystack, (i+1));
+	}
+
+	//sort array ithSkew in ascending order
 	qsort(ithSkew, n, sizeof(int), cmp);
 
-	//for(i=0; i<n; i++){printf("%d ",ithSkew[i]);}
-
-	//printf("\n");
-	
-	minSkew = ithSkew[0];
-	return minSkew;
+	return ithSkew[0];
 }
 
+/**
+ * references on printing error messages
+ * http://www.tutorialspoint.com/cprogramming/c_error_handling.htm
+ * http://www.jstorimer.com/blogs/workingwithcode/7766119-when-to-use-stderr-instead-of-stdout
+ */
+
+
 int main(){
-	/* //test hamming distance
+	
+	//* //test hamming distance
+	printf("\ntest hamming distance\n");
 	printf("%d\n",getHammingDistance("AACCTT","GGCCTT"));
 	printf("%d\n",getHammingDistance("TCGGA","AAAAG"));
  	printf("%d\n",getHammingDistance("A","AG"));
  	//*/
+ 	printf("%d\n",getHammingDistance(NULL,"MEOWMEOWA"));
+ 	printf("%d\n",getHammingDistance("AHEHEHE","AJEJEJE"));
+ 	printf("%d\n",getHammingDistance("lol","AJEJEJE"));
+ 	printf("%d\n",getHammingDistance("che",""));
  	
- 	/* //test substr pattern
+ 	//* //test substr pattern
+ 	printf("\ntest substr pattern\n");
  	printf("%d\n",countSubstrPattern("AATATATAGG","GG"));
 	printf("%d\n",countSubstrPattern("AATATATAGG","ATA"));
+	printf("%d\n",countSubstrPattern("","ACTGACTGACTG"));
  	printf("%d\n",countSubstrPattern("AATATATAGG","ACTGACTGACTG"));
+ 	printf("%d\n",countSubstrPattern("AATATATAGG",NULL));
  	//*/
 
- 	/* //test valid string
+ 	//* //test valid string
+ 	printf("\ntest valid string\n");
  	printf("%d\n",isValidString("AAGGCTATGC","ACGT"));
+ 	printf("%d\n",isValidString("AAGGCTATGC",NULL));
 	printf("%d\n",isValidString("AAGGCTATGa","ACGT"));
+	printf("%d\n",isValidString("","ACGT"));
 	printf("%d\n",isValidString("ACGT","ACGT"));
 	printf("%d\n",isValidString("ACGT101_","ACGT"));
+	printf("%d\n",isValidString(NULL,"ACGT"));
 	printf("%d\n",isValidString("091212345","0123456789"));
  	//*/
 
- 	/* //test skew
+ 	//* //test skew
+ 	printf("\ntest skew\n");
  	printf("%d\n",getSkew("GGCCAC", 1));
+ 	printf("%d\n",getSkew("GGCCAC", 0));
  	printf("%d\n",getSkew("GGCCAC", 2));
  	printf("%d\n",getSkew("GGCCAC", 3));
+ 	printf("%d\n",getSkew("", 3));
+ 	printf("%d\n",getSkew(NULL, 4));
  	printf("%d\n",getSkew("GGCCAC", 4));
+ 	printf("%d\n",getSkew("GGCCAC", -4));
  	printf("%d\n",getSkew("GGCCAC", 5));
- 	//*/
-
- 	/* //test max skew
- 	printf("%d\n",getMaxSkew("GGCCAC", 1));
- 	printf("%d\n",getMaxSkew("GGCCAC", 2));
- 	printf("%d\n",getMaxSkew("GGCCAC", 3));
- 	printf("%d\n",getMaxSkew("GGCCAC", 4));
- 	printf("%d\n",getMaxSkew("GGCCAC", 5));
+ 	printf("%d\n",getSkew("GGCCAC", 15));
  	//*/
  	
  	//* //test max skew
+ 	printf("\ntest max skew\n");
+ 	printf("%d\n",getMaxSkew("GGCCAC", 1));
+ 	printf("%d\n",getMaxSkew("GGCCAC", 2));
+ 	printf("%d\n",getMaxSkew("GGCCAC", 32));
+ 	printf("%d\n",getMaxSkew("GGCCAC", 0));
+ 	printf("%d\n",getMaxSkew("", 0));
+ 	printf("%d\n",getMaxSkew(NULL, 3));
+ 	printf("%d\n",getMaxSkew("GGCCAC", 3));
+ 	printf("%d\n",getMaxSkew("GGCCAC", 4));
+ 	printf("%d\n",getMaxSkew("GGCCAC", -8));
+ 	printf("%d\n",getMaxSkew("GGCCAC", 5));
+ 	//*/
+ 	
+ 	//* //test min skew
+ 	printf("\ntest min skew\n");
  	printf("%d\n",getMinSkew("GGCCAC", 1));
+ 	printf("%d\n",getMinSkew("GGCCAC", 0));
  	printf("%d\n",getMinSkew("GGCCAC", 2));
+ 	printf("%d\n",getMinSkew("GGCCAC", 12));
+ 	printf("%d\n",getMinSkew("GGCCAC", -42));
+	printf("%d\n",getMinSkew("", 0));
+ 	printf("%d\n",getMinSkew(NULL, 3));
  	printf("%d\n",getMinSkew("GGCCAC", 3));
  	printf("%d\n",getMinSkew("GGCCAC", 4));
  	printf("%d\n",getMinSkew("GGCCAC", 5));
  	//*/
+
+ 	printf("end\n");
 	return 0;
 }
+
