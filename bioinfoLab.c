@@ -247,6 +247,52 @@ int getMaxSkew(char *str, int n){
 	return maxSkew;
 }
 
+/**
+ * int getMinSkewN(string str, int n)
+ * Given a genome str of some length q (where q>0), it returns the minimum 
+ * value of the number of Gs minus the number of Cs in the first n nucleotides 
+ * (q>=n). 
+ * The value can be zero, negative or positive. 
+ * The first position is one (1) not zero(0) as we typically associate with 
+ * string implementations.
+ * 
+ * Example:
+ * getMinSkewN(“GGCCAC”, 1) //returns 1
+ * getMinSkewN(“GGCCAC”, 2) //returns 1
+ * getMinSkewN(“GGCCAC”, 3) //returns 1
+ * getMinSkewN(“GGCCAC”, 4) //returns 0
+ * getMinSkewN(“GGCCAC”, 5) //returns 0
+**/
+int getMinSkew(char *str, int n){
+
+	int minSkew = 0;	
+
+	int i;
+	char *ptr;
+
+	char haystack[n];
+	strcpy(haystack,str);
+	//printf("%s\n", haystack);
+	
+	haystack[n] = '\0';
+	//printf("%s\n", haystack);
+	
+	int ithSkew[n];
+	for(i=0; i<n; i++){
+		ithSkew[i] = getSkew(haystack, (i+1));
+		//printf("%d\n",ithSkew[i]);
+	}
+
+	
+	qsort(ithSkew, n, sizeof(int), cmp);
+
+	//for(i=0; i<n; i++){printf("%d ",ithSkew[i]);}
+
+	//printf("\n");
+	
+	minSkew = ithSkew[0];
+	return minSkew;
+}
 
 int main(){
 	/* //test hamming distance
@@ -277,12 +323,20 @@ int main(){
  	printf("%d\n",getSkew("GGCCAC", 5));
  	//*/
 
- 	//* //test max skew
+ 	/* //test max skew
  	printf("%d\n",getMaxSkew("GGCCAC", 1));
  	printf("%d\n",getMaxSkew("GGCCAC", 2));
  	printf("%d\n",getMaxSkew("GGCCAC", 3));
  	printf("%d\n",getMaxSkew("GGCCAC", 4));
  	printf("%d\n",getMaxSkew("GGCCAC", 5));
+ 	//*/
+ 	
+ 	//* //test max skew
+ 	printf("%d\n",getMinSkew("GGCCAC", 1));
+ 	printf("%d\n",getMinSkew("GGCCAC", 2));
+ 	printf("%d\n",getMinSkew("GGCCAC", 3));
+ 	printf("%d\n",getMinSkew("GGCCAC", 4));
+ 	printf("%d\n",getMinSkew("GGCCAC", 5));
  	//*/
 	return 0;
 }
