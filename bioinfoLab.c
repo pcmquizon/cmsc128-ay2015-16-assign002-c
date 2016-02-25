@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include<stdlib.h>
 #include<string.h>
 
 /** 
@@ -188,6 +189,65 @@ int getSkew(char *str, int n){
 }
 
 
+/**
+ * http://www.tutorialspoint.com/c_standard_library/c_function_qsort.htm
+ * http://stackoverflow.com/questions/11524857/built-in-functions-for-sorting-arrays-in-c
+ * should return 
+ * 		negative if the first argument is less than the second, 
+ * 		zero if they are equal, and 
+ * 		positive if the first argument is greater than the second
+**/
+int cmp(const void *a, const void *b){
+	return *(int*)a-*(int*)b;
+}
+
+
+/**
+ * int getMaxSkewN(string str, int n)
+ * Given a genome str of some length q (where q>0), it returns the maximum 
+ * value of the number of Gs minus the number of Cs in the first n nucleotides 
+ * (q>=n). The value can be zero, negative or positive. 
+ * The first position is one (1) not zero(0) as we typically associate with 
+ * string implementations.
+ * Example:
+ * getMaxSkewN(“GGCCAC”, 1) //returns 1
+ * getMaxSkewN(“GGCCAC”, 2) //returns 2
+ * getMaxSkewN(“GGCCAC”, 3) //returns 2
+ * getMaxSkewN(“GGCCAC”, 4) //returns 2
+ * getMaxSkewN(“GGCCAC”, 5) //returns 2
+**/
+int getMaxSkew(char *str, int n){
+
+	int maxSkew = 0;	
+
+	int i;
+	char *ptr;
+
+	char haystack[n];
+	strcpy(haystack,str);
+	//printf("%s\n", haystack);
+	
+	haystack[n] = '\0';
+	//printf("%s\n", haystack);
+	
+	int ithSkew[n];
+	for(i=0; i<n; i++){
+		ithSkew[i] = getSkew(haystack, (i+1));
+		//printf("%d\n",ithSkew[i]);
+	}
+
+	
+	qsort(ithSkew, n, sizeof(int), cmp);
+
+	//for(i=0; i<n; i++){printf("%d ",ithSkew[i]);}
+
+	//printf("\n");
+	
+	maxSkew = ithSkew[n-1];
+	return maxSkew;
+}
+
+
 int main(){
 	/* //test hamming distance
 	printf("%d\n",getHammingDistance("AACCTT","GGCCTT"));
@@ -209,12 +269,20 @@ int main(){
 	printf("%d\n",isValidString("091212345","0123456789"));
  	//*/
 
- 	//* //test skew
+ 	/* //test skew
  	printf("%d\n",getSkew("GGCCAC", 1));
  	printf("%d\n",getSkew("GGCCAC", 2));
  	printf("%d\n",getSkew("GGCCAC", 3));
  	printf("%d\n",getSkew("GGCCAC", 4));
  	printf("%d\n",getSkew("GGCCAC", 5));
+ 	//*/
+
+ 	//* //test max skew
+ 	printf("%d\n",getMaxSkew("GGCCAC", 1));
+ 	printf("%d\n",getMaxSkew("GGCCAC", 2));
+ 	printf("%d\n",getMaxSkew("GGCCAC", 3));
+ 	printf("%d\n",getMaxSkew("GGCCAC", 4));
+ 	printf("%d\n",getMaxSkew("GGCCAC", 5));
  	//*/
 	return 0;
 }
