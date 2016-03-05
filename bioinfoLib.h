@@ -210,7 +210,7 @@ int cmp(const void *a, const void *b){
   * @return		maximum number of Gs minus number of Cs found after computing
   *                  after computing all skews
   */
-int getMaxSkew(char *str, int n){
+int getMaxSkewN(char *str, int n){
 
 	if( str==NULL ){
 		fprintf(stderr,"Error! Input string is NULL!\n");
@@ -266,7 +266,7 @@ int getMaxSkew(char *str, int n){
   * @return		minimum number of Gs minus number of Cs found after computing
   *                  after computing all skews
   */
-int getMinSkew(char *str, int n){
+int getMinSkewN(char *str, int n){
 
 	if( str==NULL ){
 		fprintf(stderr,"Error! Input string is NULL!\n");
