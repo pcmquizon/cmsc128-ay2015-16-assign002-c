@@ -8,12 +8,13 @@
   * 
   * @param  str1 1st input string, must be of same length with str2
   * @param  str2 2nd input string, must be of same length with str1
+  * 
   * @return -1 	any of the ff. occured:
   *             	- one or both input string(s) is NULL
   *             	- one or both input string(s) is empty
   *             	- the strings' lengths do not match
   * 			
-  * @return		number of characters that differ in ith position 
+  * @return	number of characters that differ in ith position 
   *                 from position 1 to strlen(str1)
   */
 int getHammingDistance(char *str1, char *str2){
@@ -43,11 +44,12 @@ int getHammingDistance(char *str1, char *str2){
   * Counts the number of occurrence of given pattern in original string
   * @param  original where string pattern will be searched
   * @param  pattern  what to search in string original
+  * 
   * @return -1 	any of the ff. occured:
   *             	- one or both input string(s) is NULL
   *             	- one or both input string(s) is empty
   * 			
-  * @return		number of occurrence of pattern in string
+  * @return	number of occurrence of pattern in string
   */
 int countSubstrPattern(char *original, char *pattern){
 
@@ -90,6 +92,7 @@ int countSubstrPattern(char *original, char *pattern){
   * given string alphabet
   * @param  str      string to be validated
   * @param  alphabet string defining the alphabet to be used in validation
+  * 
   * @return -1 	any of the ff. occured:
   *             	- one or both input string(s) is NULL
   *             	- one or both input string(s) is empty
@@ -143,9 +146,9 @@ int isValidString(char *str, char *alphabet){
   *             	- input string is NULL
   *             	- input string is empty
   *             	- input n is greater than length of input string
-  *             	- input n is less than 0
+  *             	- input n is less than or equal to 0
   * 			
-  * @return		number of Gs minus number of Cs found in the first n indices
+  * @return	number of Gs minus number of Cs found in the first n indices
   */
 int getSkew(char *str, int n){
 
@@ -158,7 +161,7 @@ int getSkew(char *str, int n){
 		return -1;
 	}
 	else if( n<=0 ){
-		fprintf(stderr,"Error! Input n is negative!\n");
+		fprintf(stderr,"Error! Input n is negative or zero!\n");
 		return -1;
 	}
 	else if( (strlen(str))<n ){
@@ -186,10 +189,12 @@ int getSkew(char *str, int n){
  /**
   * http://www.tutorialspoint.com/c_standard_library/c_function_qsort.htm
   * http://stackoverflow.com/questions/11524857/built-in-functions-for-sorting-arrays-in-c
-  * should return 
+  * 
+  * Daniel Leschkowski: 
+  * "...should return 
   * 		negative if the first argument is less than the second, 
   * 		zero if they are equal, and 
-  * 		positive if the first argument is greater than the second
+  * 		positive if the first argument is greater than the second..."
  **/
 int cmp(const void *a, const void *b){
 	return *(int*)a-*(int*)b;
@@ -205,9 +210,9 @@ int cmp(const void *a, const void *b){
   *             	- input string is NULL
   *             	- input string is empty
   *             	- input n is greater than length of input string
-  *             	- input n is less than 0
+  *             	- input n is less than or equal to 0
   * 			
-  * @return		maximum number of Gs minus number of Cs found after computing
+  * @return	maximum number of Gs minus number of Cs found after computing
   *                  after computing all skews
   */
 int getMaxSkewN(char *str, int n){
@@ -221,7 +226,7 @@ int getMaxSkewN(char *str, int n){
 		return -1;
 	}
 	else if( n<=0 ){
-		fprintf(stderr,"Error! Input n is negative!\n");
+		fprintf(stderr,"Error! Input n is negative or zero!\n");
 		return -1;
 	}
 	else if( (strlen(str))<n ){
@@ -261,9 +266,9 @@ int getMaxSkewN(char *str, int n){
   *             	- input string is NULL
   *             	- input string is empty
   *             	- input n is greater than length of input string
-  *             	- input n is less than 0
+  *             	- input n is less than or equal to 0
   * 			
-  * @return		minimum number of Gs minus number of Cs found after computing
+  * @return	minimum number of Gs minus number of Cs found after computing
   *                  after computing all skews
   */
 int getMinSkewN(char *str, int n){
@@ -277,7 +282,7 @@ int getMinSkewN(char *str, int n){
 		return -1;
 	}
 	else if( n<=0 ){
-		fprintf(stderr,"Error! Input n is negative!\n");
+		fprintf(stderr,"Error! Input n is negative or zero!\n");
 		return -1;
 	}
 	else if( (strlen(str))<n ){
