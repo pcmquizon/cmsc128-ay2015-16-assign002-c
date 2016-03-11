@@ -10,9 +10,8 @@ A bioinformatics library written in C
 ###It has the following functions: 
 
 1. **int getHammingDistance(string str1, string str2)**
-	* <p>Given two strings str1 and str2 of same length (length must never be 0 or negative!), the Hamming Distance of those two strings are the number of inversions per character need to transform str1 to str2 or vise-versa. </p>
-	* <p>Simply put, the Hamming Distance of two strings is the number of characters that differ in ith position from position 1 to strlen(str1).</p>
-  
+	* <p>Given two strings ```str1``` and ```str2``` of same length (length must never be 0 or negative!), the Hamming Distance of those two strings are the number of inversions per character need to transform str1 to str2 or vise-versa. </p>
+
 	Example:
 	```
 	getHammingDistance(“AACCTT”,”GGCCTT”) //returns 2
@@ -21,7 +20,7 @@ A bioinformatics library written in C
 	```
  
 2. **int countSubstrPattern(string original, string pattern)**
-	* <p>Given a string original and pattern, we will count the number of occurrence of pattern in original.</p>
+	* <p>Given a string original and pattern, it will count the number of occurrences of string ```pattern``` in string ```original```.</p>
   
 	Example:
 	```
@@ -31,21 +30,20 @@ A bioinformatics library written in C
 	```
 
 3. **bool isValidString(string str, string alphabet)**
-	* <p>Given an alphabet string where all letters are assumed to be unique, this function returns true if the string str is a valid string based on the letters of alphabet.</p>
+	* <p>Given a string ```alphabet``` where all letters are assumed to be unique, this function returns true (0) if the string ```str``` is a valid string based on the letters of alphabet.</p>
   
 	Example:
 	```
-	isValidString(“AAGGCTATGC”,”ACGT”) //returns true i.e. return 1
-	isValidString(“AAGGCTATGa”,”ACGT”) //returns false i.e. return 0
-	isValidString(“ACGT”,”ACGT”) //returns true i.e. return 1
-	isValidString(“ACGT101_”,”ACGT”) //returns false i.e. return 0
-	isValidString(“091212345”,”0123456789”) //returns true i.e. return 1
+	isValidString(“AAGGCTATGC”,”ACGT”) //returns 1
+	isValidString(“AAGGCTATGa”,”ACGT”) //returns 0
+	isValidString(“ACGT”,”ACGT”) //returns 1
+	isValidString(“ACGT101_”,”ACGT”) //returns 0
+	isValidString(“091212345”,”0123456789”) //returns 1
 	```
 
 4. **int getSkew(string str, int n)**
-	* <p>Given a genome str of some length q (where q>0), it returns the number of Gs minus the number of Cs in the first n nucleotides (q>=n).</p>
-	* <p>The value can be zero, negative or positive. The first position is one (1) not zero(0) as we typically associate with string implementations.</p>
-  
+	* <p>Given a genome ```str``` of some length ```q``` (where q>0), it returns the number of Gs minus the number of Cs in the first n nucleotides (q>=n).</p>
+
 	Example:
 	```
 	getSkew(“GGCCAC”, 1) //returns 1
@@ -56,8 +54,7 @@ A bioinformatics library written in C
 	```
 
 5. **int getMaxSkewN(string str, int n)**
-	* <p>Given a genome str of some length q (where q>0), it returns the maximum value of the number of Gs minus the number of Cs in the first n nucleotides (q>=n).</p>
-	* <p>The value can be zero, negative or positive. The first position is one (1) not zero(0) as we typically associate with string implementations.</p>
+	* <p>Given a genome ```str``` of some length ```q``` (where q>0), it returns the maximum value of the number of Gs minus the number of Cs in the first n nucleotides (q>=n).</p>
 
 	Example:
 	```
@@ -69,8 +66,7 @@ A bioinformatics library written in C
 	```
 
 6. **int getMinSkewN(string str, int n)**
-	* <p>Given a genome str of some length q (where q>0), it returns the minimum value of the number of Gs minus the number of Cs in the first n nucleotides (q>=n). </p>
-	* <p>The value can be zero, negative or positive. The first position is one (1) not zero(0) as we typically associate with string implementations.</p>
+	* <p>Given a genome ```str``` of some length ```q``` (where q>0), it returns the minimum value of the number of Gs minus the number of Cs in the first n nucleotides (q>=n). </p>
 
 	Example:
 	```
@@ -80,3 +76,6 @@ A bioinformatics library written in C
 	getMinSkewN(“GGCCAC”, 4) //returns 0
 	getMinSkewN(“GGCCAC”, 5) //returns 0
 	```
+
+
+>Note: Function descriptions and sample function calls were lifted from the given specifications.
